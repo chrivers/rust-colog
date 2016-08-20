@@ -9,7 +9,7 @@ fn level_token(level: &LogLevel) -> &str
     {
         LogLevel::Error => "E",
         LogLevel::Warn  => "W",
-        LogLevel::Info  => "I",
+        LogLevel::Info  => "*",
         LogLevel::Debug => "D",
         LogLevel::Trace => "T",
     }
@@ -22,14 +22,9 @@ fn prefix_token(level: &LogLevel) -> String
 
 pub fn format(record: &LogRecord) -> String
 {
-    let loc = record.location();
     format!(
-        "{} args={}, loc.module_path={}, loc.file={}, loc.line={}, record.target={}",
+        "{} {}",
         prefix_token(&record.level()),
         record.args(),
-        loc.module_path(),
-        loc.file(),
-        loc.line(),
-        record.target(),
     )
 }
