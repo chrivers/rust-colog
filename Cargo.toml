@@ -1,0 +1,6 @@
+[package]
+name = "colog"
+version = "0.1.0"
+authors = ["Christian Iversen <ci@iversenit.dk>"]
+
+[dependencies]
