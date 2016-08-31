@@ -22,9 +22,10 @@ fn prefix_token(level: &LogLevel) -> String
 
 pub fn format(record: &LogRecord) -> String
 {
+    let sep = format!("\n{} ", " | ".white().bold());
     format!(
         "{} {}",
         prefix_token(&record.level()),
-        record.args(),
+        format!("{}", record.args()).replace("\n", &sep),
     )
 }
