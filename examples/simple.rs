@@ -11,4 +11,7 @@ fn main()
     info!("info message");
     debug!("debug message");
     trace!("trace message");
+
+    info!("multi line demonstration\nhere");
+    info!("more\nmulti\nline\nhere\nhere");
 }
