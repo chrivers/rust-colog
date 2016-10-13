@@ -35,3 +35,8 @@ The color and terminal handling could use a serious improvement, via
 one of the nice terminal crates available now.
 
 Patches welcome :)
+
+## License ##
+
+This project is licensed under the LGPLv3. See the file [LICENSE](LICENSE) for
+details.
