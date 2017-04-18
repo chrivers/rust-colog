@@ -1,4 +1,3 @@
-#[macro_use]
 extern crate log;
 extern crate colored;
 extern crate env_logger;
@@ -25,5 +24,5 @@ pub fn builder() -> LogBuilder
 
 pub fn init()
 {
-    drop(builder().init())
+    builder().init().unwrap()
 }
