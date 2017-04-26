@@ -1,7 +1,17 @@
 [package]
 name = "colog"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Christian Iversen <ci@iversenit.dk>"]
+
+description = "The `colog` library is a simple formatter backend for the standard rust logging system (in the `log` crate)."
+
+homepage = "https://github.com/chrivers/rust-colog"
+
+readme = "README.md"
+
+categories = ["value-formatting", "command-line-interface", "development-tools"]
+
+license = "LGPL-3.0"
 
 [dependencies]
 log = '0.3.*'
