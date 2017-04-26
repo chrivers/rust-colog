@@ -4,6 +4,6 @@ version = "0.1.0"
 authors = ["Christian Iversen <ci@iversenit.dk>"]
 
 [dependencies]
-log = '^0.3'
-env_logger = ''
+log = '0.3.*'
+env_logger = '0.4.*'
 colored = '1.3'
