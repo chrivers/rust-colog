@@ -27,12 +27,11 @@ fn main()
 
 This results in the following terminal output:
 
-![terminal example](screenshot.png "Terminal output for example")
+![demo screenshot from terminal](https://raw.githubusercontent.com/chrivers/rust-colog/master/screenshot.png)
 
 ## Known issues and improvements ##
 
-The color and terminal handling could use a serious improvement, via
-one of the nice terminal crates available now.
+There are no known, serious, unsolved issues.
 
 Patches welcome :)
 
