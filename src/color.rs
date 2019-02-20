@@ -1,16 +1,16 @@
 use log;
-use log::LogLevel;
+use log::Level;
 use colored::*;
 
 #[allow(dead_code)]
-pub fn level_color(level: &log::LogLevel, msg: &str) -> String
+pub fn level_color(level: &log::Level, msg: &str) -> String
 {
     match level
     {
-        &LogLevel::Error => msg.red(),
-        &LogLevel::Warn  => msg.yellow(),
-        &LogLevel::Info  => msg.green(),
-        &LogLevel::Debug => msg.green(),
-        &LogLevel::Trace => msg.magenta(),
+        &Level::Error => msg.red(),
+        &Level::Warn  => msg.yellow(),
+        &Level::Info  => msg.green(),
+        &Level::Debug => msg.green(),
+        &Level::Trace => msg.magenta(),
     }.bold().to_string()
 }

@@ -12,7 +12,7 @@ extern crate colog;
 
 fn main()
 {
-    drop(colog::init());
+    colog::init();
     error!("error message");
     error!("error with fmt: {}", 42);
     warn!("warn message");
