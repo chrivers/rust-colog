@@ -3,14 +3,12 @@ extern crate colored;
 extern crate env_logger;
 
 use std::env;
-#[allow(unused_imports)]
 use log::LevelFilter;
 use env_logger::Builder;
 
 mod format;
 mod color;
 
-#[allow(dead_code)]
 pub fn builder() -> Builder
 {
     let mut builder = Builder::new();
