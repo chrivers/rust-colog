@@ -1,7 +1,3 @@
-extern crate log;
-extern crate colored;
-extern crate env_logger;
-
 use std::env;
 use log::LevelFilter;
 use env_logger::Builder;
