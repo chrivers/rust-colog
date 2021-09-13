@@ -1,6 +1,6 @@
 [package]
 name = "colog"
-version = "1.0.0"
+version = "1.1.0"
 authors = ["Christian Iversen <ci@iversenit.dk>"]
 
 description = "The `colog` library is a simple formatter backend for the standard rust logging system (in the `log` crate)."
