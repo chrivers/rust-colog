@@ -1,4 +1,3 @@
-use log;
 use log::Level;
 use colored::*;
 
