@@ -1,6 +1,6 @@
 [package]
 name = "colog"
-version = "1.1.0"
+version = "1.2.0"
 authors = ["Christian Iversen <ci@iversenit.dk>"]
 
 description = "The `colog` library is a simple formatter backend for the standard rust logging system (in the `log` crate)."
@@ -17,5 +17,5 @@ edition = "2018"
 
 [dependencies]
 log = '^0.4'
-env_logger = '0.9'
+env_logger = '0.10'
 colored = '2'
