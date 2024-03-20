@@ -9,8 +9,8 @@ pub fn builder() -> Builder
     let mut builder = Builder::new();
     builder.format(format::format);
     builder.filter(None, LevelFilter::Info);
-    if env::var("RUST_LOG").is_ok() {
-        builder.parse_filters(&env::var("RUST_LOG").unwrap());
+    if let Ok(rust_log) = env::var("RUST_LOG") {
+        builder.parse_filters(&rust_log);
     }
     builder
 }
