@@ -6,9 +6,7 @@ rust logging system (in the `log` crate).
 ## Getting started ##
 
 ```rust
-#[macro_use]
-extern crate log;
-extern crate colog;
+use log::{error, warn, info, debug, trace};
 
 fn main()
 {
