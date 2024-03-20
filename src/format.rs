@@ -1,8 +1,8 @@
+use std::io::{Error, Write};
+
 use colored::*;
 use env_logger::fmt::Formatter;
-use log::Level;
-use log::Record;
-use std::io::{Error, Write};
+use log::{Level, Record};
 
 pub fn level_color(level: &log::Level, msg: &str) -> String {
     match level {
