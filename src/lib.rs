@@ -2,7 +2,7 @@ use std::env;
 use log::LevelFilter;
 use env_logger::Builder;
 
-mod format;
+pub mod format;
 
 pub fn builder() -> Builder
 {
