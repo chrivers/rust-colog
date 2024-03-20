@@ -6,6 +6,8 @@ use std::env;
 
 pub mod format;
 
+use format::CologStyle;
+
 /// Returns a [`env_logger::Builder`] that is configured to use [`crate`]
 /// formatting for its output.
 ///
@@ -15,15 +17,16 @@ pub mod format;
 /// If desired, these steps can be performed manually, like so:
 ///
 /// ```rust
+/// use colog::format::CologStyle;
 /// let mut builder = env_logger::Builder::new();
-/// builder.format(colog::format::format);
+/// builder.format(|buf, rec| colog::format::DEFAULT.format(buf, rec));
 /// /* further builder setup here.. */
 /// builder.init();
 /// log::info!("logging is ready");
 /// ```
 pub fn basic_builder() -> Builder {
     let mut builder = Builder::new();
-    builder.format(format::format);
+    builder.format(|buf, rec| format::DEFAULT.format(buf, rec));
     builder
 }
 
