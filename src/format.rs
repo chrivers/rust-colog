@@ -1,9 +1,20 @@
 use env_logger::fmt::Formatter;
 use log::Record;
 use log::Level;
-use crate::color;
 use colored::*;
 use std::io::{Error, Write};
+
+pub fn level_color(level: &log::Level, msg: &str) -> String
+{
+    match level
+    {
+        Level::Error => msg.red(),
+        Level::Warn  => msg.yellow(),
+        Level::Info  => msg.green(),
+        Level::Debug => msg.green(),
+        Level::Trace => msg.magenta(),
+    }.bold().to_string()
+}
 
 fn level_token(level: &Level) -> &str
 {
@@ -19,7 +30,7 @@ fn level_token(level: &Level) -> &str
 
 fn prefix_token(level: &Level) -> String
 {
-    format!("{}{}{}", "[".blue().bold(), color::level_color(level, level_token(level)), "]".blue().bold())
+    format!("{}{}{}", "[".blue().bold(), level_color(level, level_token(level)), "]".blue().bold())
 }
 
 pub fn format(buf: &mut Formatter, record: &Record<'_>) -> Result<(), Error>
