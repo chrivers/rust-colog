@@ -66,14 +66,14 @@ use format::CologStyle;
 /// ```rust
 /// use colog::format::CologStyle;
 /// let mut builder = env_logger::Builder::new();
-/// builder.format(|buf, rec| colog::format::DEFAULT.format(buf, rec));
+/// builder.format(|buf, rec| colog::format::DefaultCologStyle.format(buf, rec));
 /// /* further builder setup here.. */
 /// builder.init();
 /// log::info!("logging is ready");
 /// ```
 pub fn basic_builder() -> Builder {
     let mut builder = Builder::new();
-    builder.format(|buf, rec| format::DEFAULT.format(buf, rec));
+    builder.format(|buf, rec| format::DefaultCologStyle.format(buf, rec));
     builder
 }
 

@@ -49,9 +49,6 @@ pub trait CologStyle {
     }
 }
 
-pub struct DefaultCologStyle {}
+pub struct DefaultCologStyle;
 
 impl CologStyle for DefaultCologStyle {}
-
-/// Default colog formatting style
-pub static DEFAULT: DefaultCologStyle = DefaultCologStyle {};
