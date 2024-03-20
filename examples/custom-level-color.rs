@@ -6,7 +6,7 @@ use colored::Colorize;
 use env_logger::Builder;
 use log::{Level, LevelFilter};
 
-pub struct CustomLevelColors {}
+pub struct CustomLevelColors;
 
 impl CologStyle for CustomLevelColors {
     fn level_color(&self, level: &log::Level, msg: &str) -> String {
@@ -23,9 +23,8 @@ impl CologStyle for CustomLevelColors {
 }
 
 fn main() {
-    let style = CustomLevelColors {};
     let mut builder = Builder::new();
-    builder.format(move |buf, rec| style.format(buf, rec));
+    builder.format(|buf, rec| CustomLevelColors.format(buf, rec));
     builder.filter(None, LevelFilter::Trace);
     builder.init();
     error!("error message");
