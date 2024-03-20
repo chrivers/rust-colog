@@ -1,6 +1,5 @@
 #[macro_use]
 extern crate log;
-use colog;
 
 fn main()
 {
