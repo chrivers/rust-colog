@@ -1,8 +1,7 @@
 #[macro_use]
 extern crate log;
 
-fn main()
-{
+fn main() {
     colog::init();
     error!("error message");
     error!("error with fmt: {}", 42);
