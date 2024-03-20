@@ -2,7 +2,7 @@
 extern crate log;
 
 fn main() {
-    let mut clog = colog::builder();
+    let mut clog = colog::default_builder();
     clog.filter(None, log::LevelFilter::Warn);
     clog.init();
     error!("error message");
