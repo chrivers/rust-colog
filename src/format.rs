@@ -29,6 +29,6 @@ pub fn format(buf: &mut Formatter, record: &Record<'_>) -> Result<(), Error>
         buf,
         "{} {}",
         prefix_token(&record.level()),
-        format!("{}", record.args()).replace("\n", &sep),
+        format!("{}", record.args()).replace('\n', &sep),
     )
 }
