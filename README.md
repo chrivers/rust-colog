@@ -35,5 +35,5 @@ Patches welcome :)
 
 ## License ##
 
-This project is licensed under the LGPLv3. See the file [LICENSE](LICENSE) for
+This project is licensed under the LGPLv3. See the file `LICENSE` for
 details.
