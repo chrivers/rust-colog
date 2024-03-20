@@ -1,3 +1,5 @@
+//! Functions and types for formatting log messages
+//!
 use std::io::{Error, Write};
 
 use colored::*;

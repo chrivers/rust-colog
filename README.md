@@ -28,6 +28,17 @@ This results in the following terminal output:
 
 ![demo screenshot from terminal](https://raw.githubusercontent.com/chrivers/rust-colog/master/screenshot.png)
 
+## Custom styling ##
+
+It's possible to override all colors and styles of `colog`.
+
+See the following examples:
+
+ - [examples/custom-level-colors.rs](examples/custom-level-colors.rs)
+ - [examples/custom-level-colors.rs](examples/custom-level-colors.rs)
+
+Also be sure to read the documentation (`cargo doc --open`) for a detailed description.
+
 ## Known issues and improvements ##
 
 There are no known, serious, unsolved issues.

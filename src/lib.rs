@@ -1,4 +1,51 @@
-#![doc = include_str!("../README.md")]
+//! # Colog: Simple colored logger for rust
+//!
+//! The `colog` library is a simple formatter backend for the standard
+//! rust logging system (in the `log` crate).
+//!
+//! For convenience, [`colog`](crate) provides utility functions to help
+//! initialize logging, while using some reasonable defaults.
+//!
+//! All these defaults can be controlled, using a few more lines of code.
+//!
+//! Example code:
+//!  - `examples/simple.rs` (minimal example)
+//!  - `examples/levels.rs` (custom log levels)
+//!
+//! ## Minimal example
+//!
+//! ```rust
+//! use log::{error, warn, info, debug, trace};
+//!
+//! // Quick start: use default initialization
+//! colog::init();
+//!
+//! error!("error message");
+//! error!("error with fmt: {}", 42);
+//! warn!("warn message");
+//! info!("info message");
+//! debug!("debug message"); // not printed (LogLevel::Info is the default level)
+//! trace!("trace message"); // not printed (LogLevel::Info is the default level)
+//!
+//! // notice how multi-line comments are handled gracefully
+//! info!("multi line demonstration\nhere");
+//! info!("more\nmulti\nline\nhere\nhere");
+//! ```
+//!
+//! This results in the following terminal output:
+//!
+//! ![demo screenshot from terminal](https://raw.githubusercontent.com/chrivers/rust-colog/master/screenshot.png)
+//!
+//! ## Custom styling ##
+//!
+//! All the styling of [`colog`](crate) can be overriden.
+//!
+//! The styling is provided by the trait [`CologStyle`], which provides default
+//!  implementations for all methods, resulting in the default colog style.
+//!
+//! Example code:
+//!   - `examples/custom-level-colors.rs`
+//!   - `examples/custom-level-tokens.rs`
 
 use env_logger::Builder;
 use log::LevelFilter;
