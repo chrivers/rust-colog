@@ -1,3 +1,5 @@
+#![doc = include_str!("../README.md")]
+
 use env_logger::Builder;
 use log::LevelFilter;
 use std::env;
