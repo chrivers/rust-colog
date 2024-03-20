@@ -8,9 +8,10 @@ rust logging system (in the `log` crate).
 ```rust
 use log::{error, warn, info, debug, trace};
 
-fn main()
-{
+fn main() {
+    // Quick start: use default initialization
     colog::init();
+
     error!("error message");
     error!("error with fmt: {}", 42);
     warn!("warn message");
