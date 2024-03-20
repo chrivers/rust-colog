@@ -1,11 +1,10 @@
-use std::env;
-use log::LevelFilter;
 use env_logger::Builder;
+use log::LevelFilter;
+use std::env;
 
 pub mod format;
 
-pub fn builder() -> Builder
-{
+pub fn builder() -> Builder {
     let mut builder = Builder::new();
     builder.format(format::format);
     builder.filter(None, LevelFilter::Info);
@@ -15,7 +14,6 @@ pub fn builder() -> Builder
     builder
 }
 
-pub fn init()
-{
+pub fn init() {
     builder().init()
 }
