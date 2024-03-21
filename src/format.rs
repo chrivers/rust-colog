@@ -43,7 +43,7 @@ use log::{Level, Record};
 ///     let mut builder = Builder::new();
 ///
 ///     // this is where we enable our custom styling
-///     builder.format(move |buf, rec| CustomLevelToken.format(buf, rec));
+///     builder.format(|buf, rec| CustomLevelToken.format(buf, rec));
 ///
 ///     // set a custom filter level
 ///     builder.filter(None, LevelFilter::Trace);
