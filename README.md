@@ -35,7 +35,8 @@ It's possible to override all colors and styles of `colog`.
 See the following examples:
 
  - [examples/custom-level-colors.rs](examples/custom-level-colors.rs)
- - [examples/custom-level-colors.rs](examples/custom-level-colors.rs)
+ - [examples/custom-level-tokens.rs](examples/custom-level-tokens.rs)
+ - [examples/custom-level-prefix.rs](examples/custom-level-prefix.rs)
 
 Also be sure to read the documentation (`cargo doc --open`) for a detailed description.
 
