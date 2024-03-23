@@ -43,7 +43,7 @@ use log::{Level, Record};
 ///     let mut builder = Builder::new();
 ///
 ///     // this is where we enable our custom styling
-///     builder.format(|buf, rec| CustomLevelToken.format(buf, rec));
+///     builder.format(colog::formatter(CustomLevelToken));
 ///
 ///     // set a custom filter level
 ///     builder.filter(None, LevelFilter::Trace);
@@ -182,7 +182,7 @@ pub trait CologStyle {
 ///
 /// let mut builder = env_logger::Builder::new();
 ///
-/// builder.format(|buf, rec| DefaultCologStyle.format(buf, rec));
+/// builder.format(colog::formatter(DefaultCologStyle));
 /// /* ... */
 /// builder.init();
 ///

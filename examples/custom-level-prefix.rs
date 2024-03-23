@@ -21,7 +21,7 @@ impl CologStyle for CustomPrefixToken {
 
 fn main() {
     let mut builder = Builder::new();
-    builder.format(|buf, rec| CustomPrefixToken.format(buf, rec));
+    builder.format(colog::formatter(CustomPrefixToken));
     builder.filter(None, LevelFilter::Trace);
     builder.init();
     error!("error message");

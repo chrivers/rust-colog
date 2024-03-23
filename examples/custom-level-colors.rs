@@ -24,7 +24,7 @@ impl CologStyle for CustomLevelColors {
 
 fn main() {
     let mut builder = Builder::new();
-    builder.format(|buf, rec| CustomLevelColors.format(buf, rec));
+    builder.format(colog::formatter(CustomLevelColors));
     builder.filter(None, LevelFilter::Trace);
     builder.init();
     error!("error message");

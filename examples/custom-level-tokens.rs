@@ -21,7 +21,7 @@ impl CologStyle for CustomLevelToken {
 
 fn main() {
     let mut builder = Builder::new();
-    builder.format(|buf, rec| CustomLevelToken.format(buf, rec));
+    builder.format(colog::formatter(CustomLevelToken));
     builder.filter(None, LevelFilter::Trace);
     builder.init();
     error!("error message");

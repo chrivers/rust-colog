@@ -47,9 +47,11 @@
 //!   - `examples/custom-level-colors.rs`
 //!   - `examples/custom-level-tokens.rs`
 
-use env_logger::Builder;
-use log::LevelFilter;
 use std::env;
+use std::io::Error;
+
+use env_logger::{fmt::Formatter, Builder};
+use log::{LevelFilter, Record};
 
 pub mod format;
 
@@ -66,14 +68,14 @@ use format::CologStyle;
 /// ```rust
 /// use colog::format::CologStyle;
 /// let mut builder = env_logger::Builder::new();
-/// builder.format(|buf, rec| colog::format::DefaultCologStyle.format(buf, rec));
+/// builder.format(colog::formatter(colog::format::DefaultCologStyle));
 /// /* further builder setup here.. */
 /// builder.init();
 /// log::info!("logging is ready");
 /// ```
 pub fn basic_builder() -> Builder {
     let mut builder = Builder::new();
-    builder.format(|buf, rec| format::DefaultCologStyle.format(buf, rec));
+    builder.format(formatter(format::DefaultCologStyle));
     builder
 }
 
@@ -113,4 +115,36 @@ pub fn builder() -> Builder {
 /// If more flexibility is needed, see [`default_builder`] or [`basic_builder`]
 pub fn init() {
     default_builder().init()
+}
+
+/// Convenience function to create binding formatter closure
+///
+/// This functions creates a `move` closure, which is useful when setting up
+/// logging with a custom styling. So instead of this:
+///
+/// ```rust
+/// # use env_logger::Builder;
+/// # use colog::format::CologStyle;
+/// # struct CustomStyle;
+/// # impl CologStyle for CustomStyle {}
+/// let mut builder = Builder::new();
+/// builder.format(|buf, rec| CustomStyle.format(buf, rec));
+/// /* ... */
+/// ```
+///
+/// One can write this:
+///
+/// ```rust
+/// # use env_logger::Builder;
+/// # use colog::format::CologStyle;
+/// # struct CustomStyle;
+/// # impl CologStyle for CustomStyle {}
+/// let mut builder = Builder::new();
+/// builder.format(colog::formatter(CustomStyle));
+/// /* ... */
+/// ```
+pub fn formatter(
+    fmt: impl CologStyle + Sync + Send,
+) -> impl Fn(&mut Formatter, &Record<'_>) -> Result<(), Error> + Sync + Send {
+    move |buf, rec| fmt.format(buf, rec)
 }
