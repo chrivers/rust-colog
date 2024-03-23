@@ -76,24 +76,10 @@ pub trait CologStyle {
     ///
     /// # Defaults
     ///
-    /// | Level            | Color   |
-    /// |------------------|---------|
-    /// | [`Level::Error`] | red     |
-    /// | [`Level::Warn`]  | yellow  |
-    /// | [`Level::Info`]  | green   |
-    /// | [`Level::Debug`] | green   |
-    /// | [`Level::Trace`] | magenta |
+    /// See [`default_level_color`]
 
     fn level_color(&self, level: &log::Level, msg: &str) -> String {
-        match level {
-            Level::Error => msg.red(),
-            Level::Warn => msg.yellow(),
-            Level::Info => msg.green(),
-            Level::Debug => msg.green(),
-            Level::Trace => msg.magenta(),
-        }
-        .bold()
-        .to_string()
+        default_level_color(level, msg)
     }
 
     /// Provide a "token" for a particular log level
@@ -111,22 +97,10 @@ pub trait CologStyle {
     ///
     /// # Defaults
     ///
-    /// | Level            | Token |
-    /// |------------------|-------|
-    /// | [`Level::Error`] | `"E"` |
-    /// | [`Level::Warn`]  | `"W"` |
-    /// | [`Level::Info`]  | `"*"` |
-    /// | [`Level::Debug`] | `"D"` |
-    /// | [`Level::Trace`] | `"T"` |
+    /// See [`default_level_token`]
 
     fn level_token(&self, level: &Level) -> &str {
-        match *level {
-            Level::Error => "E",
-            Level::Warn => "W",
-            Level::Info => "*",
-            Level::Debug => "D",
-            Level::Trace => "T",
-        }
+        default_level_token(level)
     }
 
     /// Construct the line prefix for a message of the given log level.
@@ -137,16 +111,10 @@ pub trait CologStyle {
     ///
     /// # Defaults
     ///
-    /// Formats the level token ([`Self::level_token`]) using
-    /// [`Self::level_color`], wrapped in `[` and `]` formatted in bold blue.
+    /// See [`default_prefix_token`]
 
     fn prefix_token(&self, level: &Level) -> String {
-        format!(
-            "{}{}{}",
-            "[".blue().bold(),
-            self.level_color(level, self.level_token(level)),
-            "]".blue().bold()
-        )
+        default_prefix_token(self, level)
     }
 
     /// Top-level formatting function for log messages.
@@ -159,19 +127,10 @@ pub trait CologStyle {
     ///
     /// # Defaults
     ///
-    /// Inject `" | "` prefix at newlines, and format result according to
-    /// [`Self::prefix_token`].
-    ///
-    /// (this is the default [`colog`](crate) style)
+    /// See [`default_format`]
 
     fn format(&self, buf: &mut Formatter, record: &Record<'_>) -> Result<(), Error> {
-        let sep = format!("\n{} ", " | ".white().bold());
-        writeln!(
-            buf,
-            "{} {}",
-            self.prefix_token(&record.level()),
-            record.args().to_string().replace('\n', &sep),
-        )
+        default_format(self, buf, record)
     }
 }
 
@@ -191,3 +150,106 @@ pub trait CologStyle {
 pub struct DefaultCologStyle;
 
 impl CologStyle for DefaultCologStyle {}
+
+/// Format a message for a particular log level
+///
+/// # Parameters
+///
+/// - `level`: The log level of the message
+/// - `msg`: The message text
+///
+/// # Returns
+///
+/// A [`String`] which is formatted according to the level. Typically, this
+/// is done by wrapping the string in terminal color codes, appropriate for
+/// the log level.
+///
+/// # Defaults
+///
+/// | Level            | Color   |
+/// |------------------|---------|
+/// | [`Level::Error`] | red     |
+/// | [`Level::Warn`]  | yellow  |
+/// | [`Level::Info`]  | green   |
+/// | [`Level::Debug`] | green   |
+/// | [`Level::Trace`] | magenta |
+
+pub fn default_level_color(level: &log::Level, msg: &str) -> String {
+    match level {
+        Level::Error => msg.red(),
+        Level::Warn => msg.yellow(),
+        Level::Info => msg.green(),
+        Level::Debug => msg.green(),
+        Level::Trace => msg.magenta(),
+    }
+    .bold()
+    .to_string()
+}
+
+/// Default implementation for [`CologStyle::level_token`]
+///
+/// # Parameters
+///
+/// - `level`: The log level of the message
+///
+/// # Returns
+///
+/// A [`&str`] which represents the token name for the given log level.
+///
+/// | Level            | Token |
+/// |------------------|-------|
+/// | [`Level::Error`] | `"E"` |
+/// | [`Level::Warn`]  | `"W"` |
+/// | [`Level::Info`]  | `"*"` |
+/// | [`Level::Debug`] | `"D"` |
+/// | [`Level::Trace`] | `"T"` |
+
+pub fn default_level_token(level: &Level) -> &'static str {
+    match level {
+        Level::Error => "E",
+        Level::Warn => "W",
+        Level::Info => "*",
+        Level::Debug => "D",
+        Level::Trace => "T",
+    }
+}
+
+/// Default implementation for [`CologStyle::prefix_token`]
+///
+/// # Returns
+///
+/// Formats the level token ([`style.level_token`]) using
+/// [`style.level_color`], wrapped in `[` and `]` formatted in bold blue.
+
+pub fn default_prefix_token(style: &(impl CologStyle + ?Sized), level: &Level) -> String {
+    format!(
+        "{}{}{}",
+        "[".blue().bold(),
+        style.level_color(level, style.level_token(level)),
+        "]".blue().bold()
+    )
+}
+
+/// Default implementation for [`CologStyle::format`]
+///
+/// # Returns
+///
+/// Inject [`style.line_separator`] prefix at newlines, and format result according to
+/// [`style.prefix_token`].
+///
+/// (this is the default [`colog`](crate) style)
+
+pub fn default_format(
+    style: &(impl CologStyle + ?Sized),
+    buf: &mut Formatter,
+    record: &Record<'_>,
+) -> Result<(), Error> {
+    let sep = format!("\n{} ", " | ".white().bold());
+    let prefix = style.prefix_token(&record.level());
+    writeln!(
+        buf,
+        "{} {}",
+        prefix,
+        record.args().to_string().replace('\n', &sep),
+    )
+}
