@@ -46,6 +46,7 @@
 //! Example code:
 //!   - `examples/custom-level-colors.rs`
 //!   - `examples/custom-level-tokens.rs`
+//!   - `examples/custom-level-prefix.rs`
 
 use std::env;
 use std::io::Error;
