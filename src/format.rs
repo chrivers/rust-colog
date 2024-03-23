@@ -117,6 +117,24 @@ pub trait CologStyle {
         default_prefix_token(self, level)
     }
 
+    /// Returns the default line separator string, used when formatting
+    /// multi-line log messages.
+    ///
+    /// When implementing a style where multi-line log messages should appear
+    /// unchanged, override this method to return `"\n"`.
+    ///
+    /// # Returns
+    ///
+    /// A string which will replace `"\n"` in the log message.
+    ///
+    /// # Defaults
+    ///
+    /// `"\n"` + (`" | "` in bold white)
+
+    fn line_separator(&self) -> String {
+        format!("\n{} ", " | ".white().bold())
+    }
+
     /// Top-level formatting function for log messages.
     ///
     /// This method is not typically overriden (rather [`Self::level_color`] or
@@ -244,7 +262,7 @@ pub fn default_format(
     buf: &mut Formatter,
     record: &Record<'_>,
 ) -> Result<(), Error> {
-    let sep = format!("\n{} ", " | ".white().bold());
+    let sep = style.line_separator();
     let prefix = style.prefix_token(&record.level());
     writeln!(
         buf,
