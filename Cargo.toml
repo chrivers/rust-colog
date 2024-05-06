@@ -5,7 +5,7 @@ authors = ["Christian Iversen <ci@iversenit.dk>"]
 
 description = "The `colog` library is a simple formatter backend for the standard rust logging system (in the `log` crate)."
 
-homepage = "https://github.com/chrivers/rust-colog"
+repository = "https://github.com/chrivers/rust-colog"
 
 readme = "README.md"
 
