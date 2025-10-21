@@ -117,6 +117,14 @@ pub trait CologStyle {
         default_prefix_token(self, level)
     }
 
+    fn first_line_separator(&self) -> String {
+        String::new()
+    }
+
+    fn first_line_separator_len(&self) -> usize {
+        self.first_line_separator().chars().count()
+    }
+
     /// Returns the default line separator string, used when formatting
     /// multi-line log messages.
     ///
@@ -132,6 +140,10 @@ pub trait CologStyle {
     /// `"\n"` + (`" | "` in bold white)
     ///
     fn line_separator(&self) -> String {
+        format!("\n{} ", " | ".white().bold())
+    }
+
+    fn final_line_separator(&self) -> String {
         format!("\n{} ", " | ".white().bold())
     }
 
@@ -271,12 +283,39 @@ pub fn default_format(
     buf: &mut Formatter,
     record: &Record<'_>,
 ) -> Result<(), Error> {
-    let sep = style.line_separator();
+    let first_sep = style.first_line_separator();
     let prefix = style.prefix_token(&record.level());
-    writeln!(
-        buf,
-        "{} {}",
-        prefix,
-        record.args().to_string().replace('\n', &sep),
-    )
+
+    let args = record.args().to_string();
+    let lines: Vec<_> = args.lines().collect();
+
+    if lines.len() == 1 {
+        // have to count chars because of color codes and unicode things
+        // counting actual graphemes would be better but this is good enough
+        // and style.first_line_separator_len() can be overridden if really necessary
+        let padding = style.first_line_separator_len() + prefix.chars().count();
+
+        writeln!(buf, "{:>width$} {}", prefix, args, width = padding)?;
+    } else {
+        let sep = style.line_separator();
+        let final_sep = style.final_line_separator();
+
+        let mut lines = lines.iter();
+
+        if let Some(first_line) = lines.next() {
+            write!(buf, "{}{} {}", first_sep, prefix, first_line)?;
+        }
+
+        let last_line = lines.next_back();
+
+        for line in lines {
+            write!(buf, "{}{}", sep, line)?;
+        }
+
+        if let Some(last_line) = last_line {
+            writeln!(buf, "{}{}", final_sep, last_line)?;
+        }
+    }
+
+    Ok(())
 }
